@@ -1,11 +1,5 @@
 'use strict';
 
-
-
-const nconf = require('nconf');
-const validator = require('validator');
-const helpers = require('./helpers');
-
 const additionalInfoController = module.exports;
 
 additionalInfoController.get = async function (req, res, next) {
