@@ -1586,6 +1586,20 @@ describe('Controllers', () => {
 			assert.equal(body.topics[1].postcount, 1);
 		});
 
+		it('should sort topics by popularity', async () => {
+			const category = await categories.create({ name: 'popularity-category' });
+			const t1 = await topics.post({ uid: fooUid, cid: category.cid, title: 'topic 1', content: 'topic 1 OP' });
+			const t2 = await topics.post({ uid: fooUid, cid: category.cid, title: 'topic 2', content: 'topic 2 OP' });
+			await topics.vote({ uid: fooUid, tid: t1.topicData.tid, direction: 1 });
+			await topics.reply({ uid: fooUid, content: 'topic 1 reply', tid: t1.topicData.tid });
+			await topics.vote({ uid: fooUid, tid: t2.topicData.tid, direction: 2 });
+			await topics.reply({ uid: fooUid, content: 'topic 2 reply', tid: t2.topicData.tid });
+			const { response, body } = await request.get(`${nconf.get('url')}/api/category/${category.slug}?sort=popularity`, { jar });
+			assert.equal(response.statusCode, 200);
+			assert.equal(body.topics[0].title, 'topic 2');
+			assert.equal(body.topics[1].title, 'topic 1');
+		});
+
 		it('should load a specific users topics from a category with tags', async () => {
 			const category = await categories.create({ name: 'filtered-category' });
 			await topics.post({ uid: fooUid, cid: category.cid, title: 'topic 1', content: 'topic 1 OP', tags: ['java', 'cpp'] });
