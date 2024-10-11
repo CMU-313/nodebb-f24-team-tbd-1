@@ -20,6 +20,7 @@
 					<select id="categoryTopicSort" class="form-select" data-field="categoryTopicSort">
 						<option value="recently_replied">[[admin/settings/post:sorting.recently-replied]]</option>
 						<option value="recently_created">[[admin/settings/post:sorting.recently-created]]</option>
+						<option value="popularity">[[admin/settings/post:sorting.popularity]]</option>
 						<option value="most_posts">[[admin/settings/post:sorting.most-posts]]</option>
 						<option value="most_votes">[[admin/settings/post:sorting.most-votes]]</option>
 						<option value="most_views">[[admin/settings/post:sorting.most-views]]</option>

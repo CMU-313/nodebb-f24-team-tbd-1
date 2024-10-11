@@ -12,7 +12,8 @@ const utils = require('../utils');
 const relative_path = nconf.get('relative_path');
 
 const intFields = [
-	'uid', 'postcount', 'topiccount', 'reputation', 'profileviews',
+	'uid', 'postcount', 'topiccount', 'reputation', 'reputationSilver',
+	'reputationGold', 'profileviews',
 	'banned', 'banned:expire', 'email:confirmed', 'joindate', 'lastonline',
 	'lastqueuetime', 'lastposttime', 'followingCount', 'followerCount',
 	'blocksCount', 'passwordExpiry', 'mutedUntil',
@@ -23,6 +24,7 @@ module.exports = function (User) {
 		'uid', 'username', 'userslug', 'email', 'email:confirmed', 'joindate',
 		'lastonline', 'picture', 'icon:bgColor', 'fullname', 'location', 'birthday', 'website',
 		'aboutme', 'signature', 'uploadedpicture', 'profileviews', 'reputation',
+		'reputationSilver', 'reputationGold',
 		'postcount', 'topiccount', 'lastposttime', 'banned', 'banned:expire',
 		'status', 'flags', 'followerCount', 'followingCount', 'cover:url',
 		'cover:position', 'groupTitle', 'mutedUntil', 'mutedReason',
@@ -40,7 +42,8 @@ module.exports = function (User) {
 		groupTitle: '',
 		groupTitleArray: [],
 		status: 'offline',
-		reputation: 0,
+		reputationSilver: true,
+		reputationGold: true,
 		'email:confirmed': 0,
 	};
 
@@ -50,7 +53,6 @@ module.exports = function (User) {
 		if (!Array.isArray(uids) || !uids.length) {
 			return [];
 		}
-
 		uids = uids.map(uid => (isNaN(uid) ? 0 : parseInt(uid, 10)));
 
 		const fieldsToRemove = [];
@@ -81,6 +83,7 @@ module.exports = function (User) {
 				user.oldUid = uniqueUids[index];
 			}
 		});
+
 		await modifyUserData(result.users, fields, fieldsToRemove);
 		return uidsToUsers(uids, uniqueUids, result.users);
 	};
@@ -200,6 +203,15 @@ module.exports = function (User) {
 			}
 
 			db.parseIntFields(user, intFields, requestedFields);
+
+			user.reputationSilver = true;
+			if (user.hasOwnProperty('reputationSilver')) {
+				user.reputationSilver = (user.reputation >= 500);
+			}
+
+			if (user.hasOwnProperty('reputationGold')) {
+				user.reputationGold = (user.reputation >= 2000);
+			}
 
 			if (user.hasOwnProperty('username')) {
 				parseDisplayName(user, uidToSettings);

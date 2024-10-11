@@ -73,6 +73,8 @@
         "fs-extra": "11.2.0",
         "graceful-fs": "4.2.11",
         "helmet": "7.1.0",
+        "highlight.js": "11.4.0",
+        "highlightjs-line-numbers.js": "^2.8.0",
         "html-to-text": "9.0.5",
         "imagesloaded": "5.0.0",
         "ipaddr.js": "2.2.0",

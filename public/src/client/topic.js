@@ -1,6 +1,8 @@
 'use strict';
 
 
+console.log('================================');
+
 define('forum/topic', [
 	'forum/infinitescroll',
 	'forum/topic/threadTools',

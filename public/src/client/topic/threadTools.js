@@ -51,6 +51,11 @@ define('forum/topic/threadTools', [
 			return false;
 		});
 
+		topicContainer.on('click', '[component="topic/claim"]', function () {
+			topicCommand('put', '/claim', 'claim');
+			return false;
+		});
+
 		topicContainer.on('click', '[component="topic/pin"]', function () {
 			topicCommand('put', '/pin', 'pin');
 			return false;
@@ -222,16 +227,26 @@ define('forum/topic/threadTools', [
 		});
 	}
 
+	// code assisted with chatGPT
 	function topicCommand(method, path, command, onComplete) {
 		if (!onComplete) {
-			onComplete = function () {};
+			onComplete = function () { };
 		}
 		const tid = ajaxify.data.tid;
 		const body = {};
 		const execute = function (ok) {
 			if (ok) {
 				api[method](`/topics/${tid}${path}`, body)
-					.then(onComplete)
+					.then(function () {
+						if (command === 'claim') {
+							ThreadTools.setClaimedState({
+								tid: tid,
+								claimerUid: app.user.uid,
+								claimerUsername: app.user.username,
+							});
+						}
+						onComplete();
+					})
 					.catch(alerts.error);
 			}
 		};
@@ -241,6 +256,10 @@ define('forum/topic/threadTools', [
 			case 'restore':
 			case 'purge':
 				bootbox.confirm(`[[topic:thread-tools.${command}-confirm]]`, execute);
+				break;
+
+			case 'claim':
+				execute(true);
 				break;
 
 			case 'pin':
@@ -353,6 +372,19 @@ define('forum/topic/threadTools', [
 		posts.addTopicEvents(data.events);
 	};
 
+	ThreadTools.setClaimedState = function (data) {
+		const threadEl = components.get('topic');
+		if (parseInt(data.tid, 10) !== parseInt(threadEl.attr('data-tid'), 10)) {
+			return;
+		}
+
+		const claimButton = threadEl.find('[component="topic/claim"]');
+		claimButton.prop('disabled', true).text(`Claimed by ${data.claimerUsername}`);
+	};
+
+	socket.on('event:topic_claimed', function (data) {
+		ThreadTools.setClaimedState(data);
+	});
 
 	ThreadTools.setPinnedState = function (data) {
 		const threadEl = components.get('topic');

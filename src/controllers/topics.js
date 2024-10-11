@@ -136,6 +136,16 @@ topicsController.get = async function getTopic(req, res, next) {
 		rel.href = `${url}/topic/${topicData.slug}${rel.href}`;
 		res.locals.linkTags.push(rel);
 	});
+
+	if (topicData.claimerUid && topicData.claimerUid !== '0') {
+		// Get the claimer's username if the topic is claimed
+		const claimer = await user.getUserFields(topicData.claimerUid, ['username']);
+		topicData.claimerUsername = claimer.username;
+	} else {
+		// If no claimer, set the username to null
+		topicData.claimerUsername = null;
+	}
+
 	res.render('topic', topicData);
 };
 

@@ -170,6 +170,12 @@ TopicObject:
           items:
             type: string
             description: HTML injected into the theme
+        claimerUid:
+          type: number
+          nullable: true
+        claimerUsername:
+          type: string
+          nullable: true
     - type: object
       description: Optional properties that may or may not be present (except for `tid`, which is always present, and is only here as a hack to pass validation)
       properties:
@@ -223,6 +229,7 @@ TopicObjectSlim:
           type: number
         claimerUid:
           type: number
+          nullable: true
         titleRaw:
           type: string
         locked:
