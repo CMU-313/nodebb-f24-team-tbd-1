@@ -80,11 +80,12 @@ _mounts.categories = (app, name, middleware, controllers) => {
 	setupPageRoute(app, '/recent', [], controllers.recent.get);
 	setupPageRoute(app, '/top', [], controllers.top.get);
 	setupPageRoute(app, '/unread', [middleware.ensureLoggedIn], controllers.unread.get);
-	setupPageRoute(app, '/additonal-info', [], controllers.additionalInfo.get);
+	// setupPageRoute(app, '/additional-info', [], controllers.additionalInfo.get);
 };
 
 _mounts.additionalInfo = (app, name, middleware, controllers) => {
-	const middlewares = [middleware.canViewAdditionalInfo];
+	const middlewares = [middleware.canViewInfo];
+
 	setupPageRoute(app, `/${name}`, middlewares, controllers.additionalInfo.list);
 };
 

@@ -101,6 +101,12 @@ describe('Admin Controllers', () => {
 		assert(body);
 	});
 
+	it('should load additional information page', async () => {
+		const { response, body } = await request.get(`${nconf.get('url')}/admin/additional-info`, { jar: jar });
+		assert.equal(response.statusCode, 200);
+		assert(body);
+	});
+
 	it('should load groups detail page', async () => {
 		const { response, body } = await request.get(`${nconf.get('url')}/admin/manage/groups/administrators`, { jar: jar });
 		assert.equal(response.statusCode, 200);

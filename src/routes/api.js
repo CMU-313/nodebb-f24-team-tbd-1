@@ -42,5 +42,12 @@ module.exports = function (app, middleware, controllers) {
 		middleware.canViewUsers,
 		middleware.checkAccountPermissions,
 	], helpers.tryRoute(controllers.accounts.edit.uploadPicture));
+
+	router.get('/admin/additional-info', (req, res) => {
+		const response = {
+			info: 'This is the additional information.',
+		};
+		res.status(200).json(response);
+	});
 };
 
