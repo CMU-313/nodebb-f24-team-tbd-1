@@ -9,8 +9,19 @@ on:
       - f24
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  lint-and-test:
+    uses:
+      ./.github/workflows/test.yaml
+
+  build-and-deploy:
+    if: github.repository == 'CMU-313/nodebb-f24-team-tbd-1'
+    needs: lint-and-test
+
     runs-on: ubuntu-latest
 
     steps:
@@ -19,44 +30,25 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '20.17.0'
 
-      - name: npm install, build, and test
+      - name: Set up NodeBB
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          ./nodebb setup '{"url":"https://nodebb-teamtbd.azurewebsites.net:443",
+            "admin:username": "admin",
+            "admin:password": "${{ secrets.ADMIN_PASSWORD }}",
+            "admin:password:confirm": "${{ secrets.ADMIN_PASSWORD }}",
+            "admin:email": "rohanpadhye@cmu.edu",
+            "database": "redis",
+            "redis:host": "${{ secrets.REDIS_HOST }}",
+            "redis:port": "6379",
+            "redis:password": "${{ secrets.REDIS_PASSWORD }}" }'
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app
-          path: release.zip
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'nodebb-teamtbd'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_517F2DBC94E34ED1A68ABE9051EEC527 }}
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF2C6F2F58874B1D9E66D7811697249C }}
