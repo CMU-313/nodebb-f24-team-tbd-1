@@ -38,15 +38,6 @@ Controllers['404'] = require('./404');
 Controllers.errors = require('./errors');
 Controllers.composer = require('./composer');
 
-Controllers.additionalInfo = require('./additional-info');
-
-// Add init function to register routes - ChatGPT
-Controllers.init = async function (params) {
-	const { router } = params;
-	// Register the /additional-info route
-	router.get('/additional-info', Controllers.additionalInfo.get);
-};
-
 Controllers.write = require('./write');
 
 Controllers.reset = async function (req, res) {

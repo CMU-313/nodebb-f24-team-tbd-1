@@ -160,7 +160,6 @@ middleware.privateTagListing = helpers.try(async (req, res, next) => {
 	next();
 });
 
-
 middleware.exposeGroupName = helpers.try(async (req, res, next) => {
 	await expose('groupName', groups.getGroupNameByGroupSlug, 'slug', req, res, next);
 });

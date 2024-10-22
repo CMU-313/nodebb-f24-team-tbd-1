@@ -98,35 +98,8 @@ module.exports = function (Categories) {
 			most_votes: `cid:${cid}:tids:votes`,
 			most_views: `cid:${cid}:tids:views`,
 		};
-		let set;
-		if (sort === 'popularity') {
-			const voteSortedSet = `cid:${cid}:tids:votes`;
-			const createSortedSet = `cid:${cid}:tids:create`;
-			const postIdsWithScores = await db.getSortedSetRangeWithScores(voteSortedSet, 0, -1);
-			const tempSortedSet = `cid:${cid}:tids:popular`;
-			await db.delete(tempSortedSet);
-			const recentIdsWithScores = await db.getSortedSetRangeWithScores(createSortedSet, 0, -1);
 
-			const currentTime = Date.now();
-			for (let i = 0; i < postIdsWithScores.length; i += 1) {
-				const postId = postIdsWithScores[i];
-				const votes = postIdsWithScores[i];
-				const result = recentIdsWithScores.find(item => item.value === postId.value);
-				const postCreationTime = result ? result.score : null;
-				if (postCreationTime) {
-					const timeSinceCreation = (currentTime - postCreationTime) / 3600000;
-					const votes_num = votes.score + 1;
-					const time = (timeSinceCreation + 2) ** 1.8;
-					const score = votes_num / time;
-					db.sortedSetAdd(tempSortedSet, score, postId.value);
-				}
-			}
-
-
-			set = tempSortedSet;
-		} else {
-			set = sortToSet.hasOwnProperty(sort) ? sortToSet[sort] : `cid:${cid}:tids`;
-		}
+		let set = sortToSet.hasOwnProperty(sort) ? sortToSet[sort] : `cid:${cid}:tids`;
 
 		if (data.tag) {
 			if (Array.isArray(data.tag)) {
