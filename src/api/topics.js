@@ -117,34 +117,6 @@ topicsAPI.reply = async function (caller, data) {
 	return postObj[0];
 };
 
-topicsAPI.claim = async function (caller, { tid }) {
-	// check if topic exists
-	const topicData = await topics.get(tid);
-	if (!topicData) {
-		throw new Error('[[error:no-topic]]');
-	}
-
-	// check if topic is claimed
-	if (topicData.claimerUid) {
-		throw new Error('[[error:topic-already-claimed]]');
-	}
-
-	// claim the topic
-	await topics.setTopicFields(tid, {
-		claimerUid: caller.uid,
-		claimerUsername: caller.username,
-	});
-
-	// start websocket event to notify other clients
-	websockets.in(`topic_${tid}`).emit('event:topic_claimed', {
-		tid,
-		claimerUid: caller.uid,
-		claimerUsername: caller.username,
-	});
-
-	return { success: true, claimerUid: caller.uid, claimerUsername: caller.username };
-};
-
 topicsAPI.delete = async function (caller, data) {
 	await doTopicAction('delete', 'event:topic_deleted', caller, {
 		tids: data.tids,
