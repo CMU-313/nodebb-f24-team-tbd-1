@@ -68,8 +68,6 @@ tags:
 paths:
   /api/:
     $ref: 'read/index.yaml'
-  /api/admin/additional-info:
-    $ref: 'read/admin/additional-info.yaml'
   /api/admin:
     $ref: 'read/admin.yaml'
   /api/admin/dashboard:

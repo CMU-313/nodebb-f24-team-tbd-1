@@ -9,7 +9,7 @@ const image = require('../image');
 const file = require('../file');
 
 module.exports = function (Groups) {
-	const allowedTypes = ['image/png', 'image/jpeg', 'image/bmp', 'video/mp4', 'video/webm', 'video/mov'];
+	const allowedTypes = ['image/png', 'image/jpeg', 'image/bmp'];
 	Groups.updateCoverPosition = async function (groupName, position) {
 		if (!groupName) {
 			throw new Error('[[error:invalid-data]]');

@@ -61,13 +61,6 @@ It is important to ensure that your NodeBB and database servers are secured. Bea
     * e.g. If your NodeBB is proxied, no ports should be open except 80 (and possibly 22, for SSH access)
 
 
-## Contributing Teammates
-* Victoria Solsky (vsolsky)
-* Andrew Youn (ayoun2)
-* Kevin Cao (kevincao)
-* Lexi Kronowitz (akronowi)
-* Erke Xia (exia)
-
 ## Upgrading NodeBB
 
 Detailed upgrade instructions are listed in [Upgrading NodeBB](https://docs.nodebb.org/configuring/upgrade/)
