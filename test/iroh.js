@@ -1,6 +1,6 @@
 //example on code visualization in the Iroh repo in the GETTING_STARTED.md
-const Iroh = require('iroh');
 
+const Iroh = require('iroh');
 
 let code = `
   if (true) {
