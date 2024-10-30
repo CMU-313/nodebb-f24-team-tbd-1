@@ -22,11 +22,11 @@ jobs:
           node-version: '20.17.0' 
 
       - name: Install dependencies
-        working-directory: ./repo/install
+        working-directory: ./install
         run: npm install
 
       - name: Run StandardJS
-        working-directory: ./repo/install
+        working-directory: ./install
         run: npx standard
 
       - name: Report StandardJS issues
