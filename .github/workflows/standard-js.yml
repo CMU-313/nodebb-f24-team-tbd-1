@@ -1,0 +1,33 @@
+name: StandardJS Linting
+
+on:
+  push:
+    branches:
+      - f24
+  pull_request:
+    branches:
+      - f24
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.17.0' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run StandardJS
+        run: npx standard
+
+      - name: Report StandardJS issues
+        if: failure()
+        run: |
+          echo "StandardJS found issues in the code. Please review the output above."
