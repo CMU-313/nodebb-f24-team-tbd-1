@@ -1,4 +1,4 @@
-// @flow
+//update
 
 function foo(x: ?number): string {
     if (x) {
