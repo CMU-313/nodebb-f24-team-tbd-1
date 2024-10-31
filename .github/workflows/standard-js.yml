@@ -26,8 +26,8 @@ jobs:
         run: npm install
 
       - name: Run StandardJS on standardjs.js
-        working-directory: ./install
-        run: npx standard ./test/standardjs.js
+        working-directory: ./test
+        run: npx standard ./standardjs.js
 
       - name: Report StandardJS issues
         if: failure()
