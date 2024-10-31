@@ -1,79 +1,76 @@
-//dead code
-const dead = require('dead');
+'use strict';
 
-//long parameter
+// long parameter
 function par(a, b, c, d, e) {
-    return a
+    return a;
 }
 
-//long parameter
+// long parameter
 function longMeth(a, b) {
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b
-    a=b    
-    a=b
-    a=b
-    a=b    
-    a=b
-    return a
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    a = b;
+    return a;
 }
-//long message chain
+// long message chain
 function chain(a, b, c, d, top){
     for (let x = a; x <= b; x++) {
         for (let y = c; y <= d; y++) {
@@ -82,13 +79,13 @@ function chain(a, b, c, d, top){
     }
 }
 
-//Method comments
+// Method comments
 function comments(a){
-    //comment
-    //comment
-    //comment
-    //comment
-    //comment
-    //comment
-    return a
+    // comment
+    // comment
+    // comment
+    // comment
+    // comment
+    // comment
+    return a;
 }
