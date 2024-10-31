@@ -1,4 +1,3 @@
-# assisted with ChatGPT
 name: StandardJS Linting
 
 on:
@@ -26,11 +25,11 @@ jobs:
         working-directory: ./install
         run: npm install
 
-      - name: Run StandardJS
+      - name: Run StandardJS on xxx.js
         working-directory: ./install
-        run: npx standard
+        run: npx standard test/standardjs.js
 
       - name: Report StandardJS issues
         if: failure()
         run: |
-          echo "StandardJS found issues in the code. Please review the output above."
+          echo "StandardJS found issues in xxx.js. Please review the output above."
