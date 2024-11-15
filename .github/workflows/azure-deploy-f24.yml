@@ -20,7 +20,6 @@ jobs:
 
   build-and-deploy:
     if: github.repository == 'CMU-313/nodebb-f24-team-tbd-1'
-    needs: lint-and-test
 
     runs-on: ubuntu-latest
 
