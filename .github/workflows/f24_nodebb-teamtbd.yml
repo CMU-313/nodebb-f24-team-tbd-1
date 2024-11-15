@@ -53,11 +53,6 @@ jobs:
           npm install ./nodebb-frontend-f24-team-tbd-1
           ./nodebb build
 
-      - name: Enable Custom Theme and Build
-        run: |
-          ./nodebb activate theme nodebb-theme-harmony-custom
-          ./nodebb build
-
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
